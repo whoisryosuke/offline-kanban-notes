@@ -11,7 +11,7 @@ import {
   getCurrentBoard,
   setCurrent,
 } from '../models/boards';
-import { useDispatch, useSelector } from '../store';
+import { useDispatch, useSelector } from '../store/utilities';
 import generateId from '../utils/generateId';
 import AddBoardModal from './BoardSidebar/AddBoardModal';
 

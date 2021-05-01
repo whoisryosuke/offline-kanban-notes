@@ -1,6 +1,8 @@
+import { Flex } from '@chakra-ui/layout';
 import React from 'react';
 import { CardData, getAllCards, getColumnCards } from '../models/cards';
-import { useSelector } from '../store';
+import { useSelector } from '../store/utilities';
+import Card from './Card';
 
 interface Props {
   id: string;
@@ -8,13 +10,12 @@ interface Props {
 
 const ColumnContent = ({ id }: Props) => {
   const columnCards = useSelector(getColumnCards(id));
-  console.log('column cards', columnCards);
   return (
-    <div>
+    <Flex flexDirection="column">
       {columnCards.map(([_, card]) => (
-        <p key={card.title}>{card.title}</p>
+        <Card key={card.title} card={card} />
       ))}
-    </div>
+    </Flex>
   );
 };
 

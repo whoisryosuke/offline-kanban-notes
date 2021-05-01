@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@chakra-ui/button';
-import { useDispatch, useSelector } from '../../store';
+import { useDispatch, useSelector } from '../../store/utilities';
 import { addColumn, getAllColumns } from '../../models/columns';
 import generateId from '../../utils/generateId';
 

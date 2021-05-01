@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button } from '@chakra-ui/button';
-import { useDispatch, useSelector } from '../../store';
+import { Button, IconButton } from '@chakra-ui/button';
+import { AddIcon } from '@chakra-ui/icons';
+import { useDispatch, useSelector } from '../../store/utilities';
 import { addColumn, getAllColumns } from '../../models/columns';
 import generateId from '../../utils/generateId';
 import { addCard, getAllCards } from '../../models/cards';
@@ -29,7 +30,15 @@ const AddCardButton = ({ columnId }: Props) => {
       })
     );
   };
-  return <Button onClick={handleAddColumn}>Add Card</Button>;
+  return (
+    <IconButton
+      aria-label="Add Card"
+      variant="ghost"
+      icon={<AddIcon w={2} h={2} />}
+      onClick={handleAddColumn}
+      size="xs"
+    />
+  );
 };
 
 export default AddCardButton;
