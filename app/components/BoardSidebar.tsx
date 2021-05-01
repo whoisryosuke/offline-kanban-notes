@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/button';
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { AddIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { Box } from '@chakra-ui/layout';
+import { Box, Stack, Text } from '@chakra-ui/layout';
 import React from 'react';
 import {
   addBoard,
@@ -42,6 +42,10 @@ const BoardSidebar = () => {
     onClose();
   };
 
+  const handleBoardSelection = (id: string) => {
+    dispatch(setCurrent(id));
+  };
+
   const colorModeIcon =
     colorMode === 'light' ? <SunIcon w={3} h={3} /> : <MoonIcon w={3} h={3} />;
   // Light / Dark
@@ -59,28 +63,48 @@ const BoardSidebar = () => {
       bg={bg}
       zIndex={420}
     >
-      Boards: <br />
-      {boardIds.length > 0 &&
-        boardIds.map((id) => <div key={id}>{boards[id].name}</div>)}
-      <Button
-        onClick={onOpen}
-        variant="ghost"
-        width="100%"
-        justifyContent="flex-start"
-        leftIcon={<AddIcon w={3} h={3} />}
-      >
-        Add Board
-      </Button>
+      <Stack spacing={1}>
+        {boardIds.length > 0 &&
+          boardIds.map((id) => (
+            <Button
+              key={id}
+              width="100%"
+              justifyContent="flex-start"
+              variant="ghost"
+              fontWeight={currentBoard === id ? 'bold' : 'normal'}
+              onClick={() => handleBoardSelection(id)}
+            >
+              {boards[id].name}
+            </Button>
+          ))}
+        {boardIds.length <= 0 && (
+          <Text fontSize="sm">
+            No boards found. <em>Add one below.</em>
+          </Text>
+        )}
+        <Button
+          onClick={onOpen}
+          variant="ghost"
+          width="100%"
+          justifyContent="flex-start"
+          leftIcon={<AddIcon w={3} h={3} />}
+        >
+          Add Board
+        </Button>
+      </Stack>
+      <AddBoardModal isOpen={isOpen} onClose={createBoard} />
+
       <Button
         onClick={toggleColorMode}
         variant="ghost"
-        width="100%"
+        width="90%"
         justifyContent="flex-start"
         leftIcon={colorModeIcon}
+        position="absolute"
+        bottom={3}
       >
         {colorMode === 'light' ? 'Light' : 'Dark'} Mode
       </Button>
-      <AddBoardModal isOpen={isOpen} onClose={createBoard} />
     </Box>
   );
 };

@@ -57,5 +57,9 @@ export default columnsSlice.reducer;
 
 export const getCurrentColumn = (state: RootState) => state.columns.current;
 export const getAllColumns = (state: RootState) => state.columns.list;
+export const getBoardColumns = (id: string) => (state: RootState) =>
+  Object.entries(state.columns.list).filter(
+    ([key, column]) => column.board === id
+  );
 export const getColumn = (column: string) => (state: RootState) =>
   state.columns.list[column];

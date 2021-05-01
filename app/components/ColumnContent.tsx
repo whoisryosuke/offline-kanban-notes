@@ -12,8 +12,8 @@ const ColumnContent = ({ id }: Props) => {
   const columnCards = useSelector(getColumnCards(id));
   return (
     <Flex flexDirection="column">
-      {columnCards.map(([_, card]) => (
-        <Card key={card.title} card={card} />
+      {columnCards.map(([cardId, card]) => (
+        <Card key={card.title} id={cardId} card={card} />
       ))}
     </Flex>
   );

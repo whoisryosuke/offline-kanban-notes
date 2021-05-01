@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@chakra-ui/button';
+import { AddIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from '../../store/utilities';
 import { addColumn, getAllColumns } from '../../models/columns';
 import generateId from '../../utils/generateId';
@@ -25,7 +26,17 @@ const AddColumnButton = ({ boardId }: Props) => {
       })
     );
   };
-  return <Button onClick={handleAddColumn}>Add Column</Button>;
+  return (
+    <Button
+      width="100%"
+      justifyContent="flex-start"
+      variant="ghost"
+      leftIcon={<AddIcon w={3} h={3} />}
+      onClick={handleAddColumn}
+    >
+      Add Column
+    </Button>
+  );
 };
 
 export default AddColumnButton;

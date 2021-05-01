@@ -4,6 +4,7 @@ import { RootState } from '../store/utilities';
 
 export type CardData = {
   title: string;
+  content?: string;
   /**
    * Order in the column
    */
@@ -13,6 +14,7 @@ export type CardData = {
    */
   column: string;
   color?: string;
+  trash: boolean;
 };
 
 export type CardList = { [key: string]: CardData };
@@ -27,7 +29,19 @@ const cardsSlice = createSlice({
     addCard: (state, action: { payload: { id: string; card: CardData } }) => {
       state.list = {
         ...state.list,
-        [action.payload.id]: action.payload.card,
+        [action.payload.id]: {
+          ...action.payload.card,
+          trash: false,
+        },
+      };
+    },
+    editCard: (
+      state,
+      action: { payload: { id: string; card: Partial<CardData> } }
+    ) => {
+      state.list[action.payload.id] = {
+        ...state.list[action.payload.id],
+        ...action.payload.card,
       };
     },
     reorderCard: (

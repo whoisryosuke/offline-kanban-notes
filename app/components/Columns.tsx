@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/button';
 import React from 'react';
 import { Box, Flex, Stack, Text } from '@chakra-ui/layout';
 import { getCurrentBoard } from '../models/boards';
-import { getAllColumns } from '../models/columns';
+import { getAllColumns, getBoardColumns } from '../models/columns';
 import { useSelector } from '../store/utilities';
 import AddColumnButton from './Columns/AddColumnButton';
 import AddCardButton from './Columns/AddCardButton';
@@ -11,8 +11,7 @@ import Column from './Column';
 
 const Columns = () => {
   const currentBoardId = useSelector(getCurrentBoard);
-  const columns = useSelector(getAllColumns);
-  const columnIds = Object.keys(columns);
+  const columns = useSelector(getBoardColumns(currentBoardId));
 
   // Generate a new column here
   // Create a Column component
@@ -40,12 +39,12 @@ const Columns = () => {
         flexWrap="nowrap"
         alignContent="stretch"
       >
-        {columnIds.length > 0 &&
-          columnIds.map((id) => (
+        {columns.length > 0 &&
+          columns.map(([id, column]) => (
             <Column key={id}>
               <Flex justifyContent="space-between" alignItems="center" mb={3}>
                 <Box py={1} px={2} bg="blue.400" borderRadius={8}>
-                  <Text fontSize="sm">{columns[id].name}</Text>
+                  <Text fontSize="sm">{column.name}</Text>
                 </Box>
                 <AddCardButton columnId={id} />
               </Flex>
