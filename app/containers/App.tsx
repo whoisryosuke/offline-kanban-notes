@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 
 type Props = {
   children: ReactNode;
@@ -6,5 +7,10 @@ type Props = {
 
 export default function App(props: Props) {
   const { children } = props;
-  return <>{children}</>;
+  return (
+    <ChakraProvider>
+      <ColorModeScript initialColorMode="dark" />
+      {children}
+    </ChakraProvider>
+  );
 }
