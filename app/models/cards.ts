@@ -21,8 +21,17 @@ export type CardList = { [key: string]: CardData };
 
 const cardsSlice = createSlice({
   name: 'cards',
-  initialState: { current: '', list: {} as CardList },
+  initialState: { current: '', edit: false, list: {} as CardList },
   reducers: {
+    openEdit: (state) => {
+      state.edit = true;
+    },
+    closeEdit: (state) => {
+      state.edit = false;
+    },
+    toggleEdit: (state) => {
+      state.edit = !state.edit;
+    },
     setCurrent: (state, action: { payload: string }) => {
       state.current = action.payload;
     },
@@ -64,8 +73,12 @@ const cardsSlice = createSlice({
 });
 
 export const {
+  openEdit,
+  closeEdit,
+  toggleEdit,
   setCurrent,
   addCard,
+  editCard,
   reorderCard,
   deleteCard,
 } = cardsSlice.actions;
@@ -81,3 +94,4 @@ export const getColumnCards = (id: string) => (state: RootState) => {
 };
 export const getCard = (card: string) => (state: RootState) =>
   state.cards.list[card];
+export const getEditMode = (state: RootState) => state.cards.edit;

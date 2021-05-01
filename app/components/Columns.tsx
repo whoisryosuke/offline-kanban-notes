@@ -30,7 +30,6 @@ const Columns = () => {
       position="relative"
       zIndex={2}
     >
-      Columns: <br />
       <Stack
         direction="row"
         spacing={3}
@@ -51,6 +50,16 @@ const Columns = () => {
               <ColumnContent id={id} />
             </Column>
           ))}
+        {columns.length <= 0 && (
+          <Column>
+            <Text fontSize="sm">
+              No columns found, try adding one{' '}
+              <span role="img" aria-label="point right">
+                👉🏼
+              </span>
+            </Text>
+          </Column>
+        )}
         <Column>
           <AddColumnButton boardId={currentBoardId} />
         </Column>

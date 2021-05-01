@@ -1,8 +1,9 @@
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Editable, EditableInput, EditablePreview } from '@chakra-ui/editable';
-import { Box, Text } from '@chakra-ui/layout';
-import React from 'react';
-import { editCard, CardData } from '../models/cards';
+import { Box, Stack, Text } from '@chakra-ui/layout';
+import marked from 'marked';
+import React, { useState } from 'react';
+import { editCard, openEdit, CardData, setCurrent } from '../models/cards';
 import { useDispatch } from '../store/utilities';
 
 interface Props {
@@ -24,17 +25,32 @@ const Card = ({ id, card }: Props) => {
       })
     );
   };
+
+  const handleCardDrawer = () => {
+    dispatch(setCurrent(id));
+    dispatch(openEdit());
+  };
   return (
-    <Box width="100%" py={2} px={3} bg={bg} borderRadius={10} mb={3}>
-      <Editable
-        fontSize="md"
-        defaultValue={card.title}
-        onChange={handleTitleChange}
-      >
-        <EditablePreview />
-        <EditableInput />
-      </Editable>
-      <Text>{card.content}</Text>
+    <Box
+      width="100%"
+      py={2}
+      px={3}
+      bg={bg}
+      borderRadius={10}
+      mb={3}
+      onClick={handleCardDrawer}
+    >
+      <Stack spacing={2}>
+        <Text fontSize="md" fontWeight="bold">
+          {card.title}
+        </Text>
+        {card?.content && (
+          <Text
+            fontSize="sm"
+            dangerouslySetInnerHTML={{ __html: marked(card.content) }}
+          />
+        )}
+      </Stack>
     </Box>
   );
 };
