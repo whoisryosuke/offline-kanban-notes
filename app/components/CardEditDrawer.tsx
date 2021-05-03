@@ -15,7 +15,7 @@ import {
 import { useDispatch, useSelector } from '../store/utilities';
 import {
   getCurrentCard,
-  getCard,
+  getCurrentCardData,
   editCard,
   CardData,
   closeEdit,
@@ -26,17 +26,19 @@ import {
 // }
 
 const CardEditDrawer = () => {
+  const [currentId, setCurrentId] = useState<string>('');
   const [card, setCard] = useState<Partial<CardData>>({});
   const isOpen = useSelector(getEditMode);
   const currentCardId = useSelector(getCurrentCard);
-  const currentCard = useSelector(getCard(currentCardId));
+  const currentCard = useSelector(getCurrentCardData);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentCardId && !card?.title) {
+    if (currentId !== currentCardId) {
+      setCurrentId(currentCardId);
       setCard(currentCard);
     }
-  }, [card, currentCard]);
+  }, [card, currentCard, currentCardId, currentId]);
 
   const handleInputSync = ({
     currentTarget: { name, value },

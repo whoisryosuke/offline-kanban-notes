@@ -11,7 +11,7 @@ interface Props {
   card: CardData;
 }
 
-const Card = ({ id, card }: Props) => {
+const Card = ({ id, card, ...restProps }: Props, ref) => {
   const dispatch = useDispatch();
   const bg = useColorModeValue('gray.300', 'gray.900');
 
@@ -32,6 +32,7 @@ const Card = ({ id, card }: Props) => {
   };
   return (
     <Box
+      ref={ref}
       width="100%"
       py={2}
       px={3}
@@ -39,6 +40,7 @@ const Card = ({ id, card }: Props) => {
       borderRadius={10}
       mb={3}
       onClick={handleCardDrawer}
+      {...restProps}
     >
       <Stack spacing={2}>
         <Text fontSize="md" fontWeight="bold">
@@ -55,4 +57,4 @@ const Card = ({ id, card }: Props) => {
   );
 };
 
-export default Card;
+export default React.forwardRef(Card);

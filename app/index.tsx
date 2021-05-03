@@ -8,6 +8,9 @@ import './app.global.css';
 const store = configuredStore();
 const persistor = persistStore(store);
 
+// DEV: Reset persisted state
+// persistor.purge();
+
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
 document.addEventListener('DOMContentLoaded', () => {
