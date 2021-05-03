@@ -1,9 +1,14 @@
 import { Button } from '@chakra-ui/button';
 import React from 'react';
 import { Box, Flex, Stack, Text } from '@chakra-ui/layout';
+import { Editable, EditableInput, EditablePreview } from '@chakra-ui/editable';
 import { getCurrentBoard } from '../models/boards';
-import { getAllColumns, getBoardColumns } from '../models/columns';
-import { useSelector } from '../store/utilities';
+import {
+  getAllColumns,
+  getBoardColumns,
+  editColumnName,
+} from '../models/columns';
+import { useDispatch, useSelector } from '../store/utilities';
 import AddColumnButton from './Columns/AddColumnButton';
 import AddCardButton from './Columns/AddCardButton';
 import ColumnContent from './ColumnContent';
@@ -12,6 +17,11 @@ import Column from './Column';
 const Columns = () => {
   const currentBoardId = useSelector(getCurrentBoard);
   const columns = useSelector(getBoardColumns(currentBoardId));
+  const dispatch = useDispatch();
+
+  const handleColumnChange = (id: string, newValue: string) => {
+    dispatch(editColumnName({ id, newValue }));
+  };
 
   // Generate a new column here
   // Create a Column component
@@ -43,7 +53,16 @@ const Columns = () => {
             <Column key={id}>
               <Flex justifyContent="space-between" alignItems="center" mb={3}>
                 <Box py={1} px={2} bg="blue.400" borderRadius={8}>
-                  <Text fontSize="sm">{column.name}</Text>
+                  <Editable
+                    fontSize="sm"
+                    defaultValue={column.name}
+                    onChange={(nextValue: string) =>
+                      handleColumnChange(id, nextValue)
+                    }
+                  >
+                    <EditablePreview />
+                    <EditableInput />
+                  </Editable>
                 </Box>
                 <AddCardButton columnId={id} />
               </Flex>

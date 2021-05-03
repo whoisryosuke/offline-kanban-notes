@@ -43,6 +43,28 @@ const columnsSlice = createSlice({
       const { [action.payload]: deleted, ...newState } = state.list;
       state.list = newState;
     },
+    editColumnName: (
+      state,
+      action: {
+        payload: {
+          id: string;
+          newValue: string;
+        };
+      }
+    ) => {
+      state.list[action.payload.id].name = action.payload.newValue;
+    },
+    editColumnColor: (
+      state,
+      action: {
+        payload: {
+          id: string;
+          newValue: string;
+        };
+      }
+    ) => {
+      state.list[action.payload.id].color = action.payload.newValue;
+    },
   },
 });
 
@@ -51,6 +73,8 @@ export const {
   addColumn,
   reorderColumn,
   deleteColumn,
+  editColumnName,
+  editColumnColor,
 } = columnsSlice.actions;
 
 export default columnsSlice.reducer;
